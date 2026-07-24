@@ -1,200 +1,700 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Forms</title>
-        <meta charset="utf-8">
-        <meta name="author" content="greatsilas23">
-<meta name="description" content="a website to conserve wildlife">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="follow, no-follow">
-        <style>
-  body
-{
-    font-size: 14;
-    font-family: 'Times New Roman', Arial;
-    font-weight: bold;
-    text-decoration: none;
-}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book MS · SPA</title>
+  <!-- Font Awesome Icons (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- RESET & BASE ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+    }
+    body {
+      background: #f4f2ee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+    .app {
+      max-width: 1300px;
+      width: 100%;
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      overflow: hidden;
+      transition: all 0.2s;
+    }
 
-table, td, tr {
-    border-collapse: collapse;
-    border: none;
-    outline: none;
-}
+    /* ----- HEADER / TOP BAR ----- */
+    .top-bar {
+      background: #e67e22;
+      padding: 12px 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.4rem;
+      letter-spacing: 0.5px;
+    }
+    .brand i {
+      font-size: 2rem;
+    }
+    .top-bar .spacer {
+      flex: 1;
+    }
+    .search-wrapper {
+      background: rgba(255,255,255,0.2);
+      border-radius: 40px;
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      color: white;
+      gap: 8px;
+    }
+    .search-wrapper input {
+      background: transparent;
+      border: none;
+      padding: 8px 4px;
+      color: white;
+      font-size: 0.95rem;
+      width: 180px;
+      outline: none;
+    }
+    .search-wrapper input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .search-wrapper i {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+    .profile-icon {
+      background: white;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e67e22;
+      font-size: 1.6rem;
+      font-weight: 300;
+    }
 
-.arrangeHorizontal
-{
-    flex-direction: row;
-}
+    /* ----- NAVIGATION TABS ----- */
+    .nav-tabs {
+      background: #1e1e1e;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 16px;
+      border-bottom: 2px solid #e67e22;
+    }
+    .nav-tab {
+      padding: 14px 20px;
+      color: #bbb;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: 0.2s;
+      border-bottom: 3px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-tab i {
+      font-size: 1rem;
+    }
+    .nav-tab:hover {
+      color: white;
+      background: #2a2a2a;
+    }
+    .nav-tab.active {
+      color: white;
+      border-bottom-color: #e67e22;
+      background: #2a2a2a;
+    }
 
-.arrangeVertically
-{
-    display: flex;
-    flex-direction: column;
-}
-.addBottomLeftCurve
-{
-    border-bottom-left-radius: 15px;
-    overflow: hidden;
-}
-.addBottomRightCurve
-{
-    border-bottom-right-radius: 15px;
-    overflow: hidden;
-}
-.addTopLeftCurve
-{
-    border-top-left-radius: 15px;
-    overflow: hidden;
-}
-.addTopRightCurve
-{
-    border-top-right-radius: 15px;
-    overflow: hidden;
-}
+    /* ----- MAIN LAYOUT (sidebar + content) ----- */
+    .main-grid {
+      display: flex;
+      flex-wrap: wrap;
+      background: #faf8f6;
+    }
+    .sidebar {
+      width: 200px;
+      background: #1e1e1e;
+      padding: 20px 12px;
+      min-height: 400px;
+      color: #ddd;
+    }
+    .sidebar-card {
+      background: #2a2a2a;
+      border-radius: 16px;
+      padding: 14px 12px;
+      margin-bottom: 16px;
+      color: #eee;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .sidebar-card h4 {
+      font-size: 0.9rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 6px;
+      margin-bottom: 10px;
+      color: #e67e22;
+    }
+    .sidebar-card ul {
+      list-style: none;
+      font-size: 0.85rem;
+      padding-left: 4px;
+    }
+    .sidebar-card ul li {
+      padding: 3px 0;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .sidebar-card ul li i {
+      width: 18px;
+      color: #e67e22;
+    }
 
-.displayShadow
-{
-    box-shadow: 15px 15px 15px rgba(5, 5, 5, 0.5);
-}
-.myFacts
-{
-    list-style-type: lower-roman;
-}
+    .content {
+      flex: 1;
+      padding: 24px 28px;
+      min-width: 280px;
+      background: #faf8f6;
+    }
 
-.add
-{
-    display: none;
-    position: absolute;
-    top: 150px;
-    left: 40vw;
-}
-.borrow
-{
-    display: none;
-    position: absolute;
-    top: 150px;
-    left: 40vw;
-}
-.returnItems
-{
-    display: none;
-    position: absolute;
-    top: 150px;
-    left: 40vw;
-}
-.overdue
-{
-    display: none;
-    position: absolute;
-    top: 150px;
-    left: 40vw;
-}
-table.output, td.output, tr.output
-{
-    border: solid 1px white;
-    border-collapse: collapsed;
-    color: white;
-}
+    /* ----- STAT CARDS (dashboard) ----- */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .stat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 16px 24px;
+      flex: 1 0 120px;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.04);
+      border: 1px solid #eee;
+      transition: 0.15s;
+    }
+    .stat-card h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #1e1e1e;
+      margin-bottom: 4px;
+    }
+    .stat-card p {
+      color: #777;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .stat-card i {
+      color: #e67e22;
+    }
 
-.edit
-{
-    display: none;
-    position: absolute;
-    top: 150px;
-    left: 40vw;
-}
-.alignInSearchBar
-{
-    position: absolute;
-    top: 95px;
-    left: 68.8vw;
-    z-index: 2;
-}
-.leftNav:hover{
-    cursor: pointer;
-}
+    /* ----- PANELS (show/hide) ----- */
+    .panel {
+      display: none;
+      animation: fade 0.25s ease;
+    }
+    .panel.active {
+      display: block;
+    }
+    @keyframes fade {
+      0% { opacity: 0.3; transform: translateY(6px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-.addBorderCurve{
-    border-radius: 10px;
-}
+    /* ----- FORMS & TABLES ----- */
+    .form-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px 28px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.03);
+      border: 1px solid #eaeaea;
+      max-width: 580px;
+      margin-bottom: 24px;
+    }
+    .form-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      color: #1e1e1e;
+      border-bottom: 2px solid #e67e22;
+      padding-bottom: 8px;
+      display: inline-block;
+    }
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      margin-bottom: 14px;
+    }
+    .form-row label {
+      width: 100px;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.9rem;
+    }
+    .form-row input, .form-row select {
+      flex: 1;
+      min-width: 160px;
+      padding: 10px 14px;
+      border: 1px solid #d0d0d0;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      background: #fcfcfc;
+      transition: 0.15s;
+    }
+    .form-row input:focus {
+      border-color: #e67e22;
+      outline: none;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 10px 28px;
+      border: none;
+      border-radius: 40px;
+      font-weight: 600;
+      background: #e67e22;
+      color: white;
+      cursor: pointer;
+      transition: 0.15s;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn:hover {
+      background: #d35400;
+      transform: scale(0.97);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #e67e22;
+      color: #e67e22;
+    }
+    .btn-outline:hover {
+      background: #e67e22;
+      color: white;
+    }
+    .btn-danger {
+      background: #c0392b;
+    }
+    .btn-danger:hover {
+      background: #a93226;
+    }
 
-.alignIconHome
-{
-    padding-left: calc(97.5vw - 50vw);
-}
-.alignIconHomeResults
-{
-    margin-left: calc(97.5vw - 50vw - 7vw - 20px);
-}
+    .table-wrap {
+      background: white;
+      border-radius: 20px;
+      overflow-x: auto;
+      border: 1px solid #eee;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    th {
+      background: #f2f0ed;
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 600;
+      color: #1e1e1e;
+    }
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #eee;
+      color: #222;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .badge {
+      background: #e67e22;
+      color: white;
+      border-radius: 40px;
+      padding: 2px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .badge-danger {
+      background: #c0392b;
+    }
 
+    /* ----- responsive ----- */
+    @media (max-width: 760px) {
+      .sidebar { width: 100%; min-height: auto; }
+      .nav-tab { padding: 10px 12px; font-size: 0.8rem; }
+      .form-row label { width: 100%; }
+    }
+    .footer {
+      background: #1e1e1e;
+      color: #888;
+      text-align: center;
+      padding: 16px;
+      font-size: 0.8rem;
+      border-top: 1px solid #333;
+    }
+    .footer i {
+      color: #e67e22;
+    }
+  </style>
+</head>
+<body>
+<div class="app" id="app">
 
-.tablink:hover
-{
-    background-color: orange;
-    color: white;
-    cursor: pointer;
-}
-.tablinkSearchBar:hover
-{
-    background-color: black;
-}
+  <!-- TOP BAR -->
+  <header class="top-bar">
+    <div class="brand">
+      <i class="fas fa-book-open"></i>
+      <span>Book MS</span>
+    </div>
+    <div class="spacer"></div>
+    <div class="search-wrapper">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search books...">
+    </div>
+    <div class="profile-icon">
+      <i class="fas fa-user"></i>
+    </div>
+  </header>
 
-.tablinkProfile:hover
-{
-    background-color: black;
-}
+  <!-- NAVIGATION -->
+  <nav class="nav-tabs" id="navTabs">
+    <div class="nav-tab active" data-tab="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</div>
+    <div class="nav-tab" data-tab="available"><i class="fas fa-check-circle"></i> Available</div>
+    <div class="nav-tab" data-tab="add"><i class="fas fa-plus-circle"></i> Add</div>
+    <div class="nav-tab" data-tab="borrow"><i class="fas fa-hand-holding-heart"></i> Borrow</div>
+    <div class="nav-tab" data-tab="return"><i class="fas fa-undo-alt"></i> Return</div>
+    <div class="nav-tab" data-tab="overdue"><i class="fas fa-clock"></i> Overdue</div>
+    <div class="nav-tab" data-tab="edit"><i class="fas fa-edit"></i> Edit</div>
+  </nav>
 
-</style>
-        <link class="addBorderCurve" rel="icon" href="./res/shelf.png">
-    </head>
-    <body onload="showTarget()">
-        
-    </body>
-    <script>
-        
-        let preface = "Library-Project
-Kenya lies across the equator and borders Somalia, Ethiopia, Tanzania, Uganda, Sudan, and the Indian Ocean. British rule in Kenya lasted for nearly 70 years between 1895 and 1963. Their style of governance their approach to land acquisition ownership, use and management their philosophy and patterns of wildlife conservation In 1907, the Game Department was established and charged with the responsibility of enforcing game laws and protecting the reserves."
+  <!-- MAIN -->
+  <div class="main-grid">
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <h4><i class="fas fa-info-circle"></i> Quick tips</h4>
+        <ul>
+          <li><i class="fas fa-barcode"></i> ISBN: 13 digits</li>
+          <li><i class="fas fa-id-card"></i> RegNo: e.g. SCT-123</li>
+          <li><i class="fas fa-calendar-alt"></i> Due: 2 weeks max</li>
+        </ul>
+      </div>
+      <div class="sidebar-card">
+        <h4><i class="fas fa-cog"></i> Actions</h4>
+        <ul>
+          <li><i class="fas fa-search"></i> Use search bar</li>
+          <li><i class="fas fa-hand-holding"></i> Borrow / Return</li>
+        </ul>
+      </div>
+    </aside>
 
-let policy = "Policy
-Introduction
-Service Provider
-These terms are between you and Book MS
+    <div class="content">
+      <!-- ===== DASHBOARD ===== -->
+      <div id="panel-dashboard" class="panel active">
+        <div class="stats">
+          <div class="stat-card"><h3>42</h3><p><i class="fas fa-book"></i> Books</p></div>
+          <div class="stat-card"><h3>7</h3><p><i class="fas fa-hand-holding"></i> Borrowed</p></div>
+          <div class="stat-card"><h3>12</h3><p><i class="fas fa-tags"></i> Categories</p></div>
+          <div class="stat-card"><h3>28</h3><p><i class="fas fa-user-edit"></i> Authors</p></div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ISBN</th><th>Title</th><th>Author</th><th>Status</th></tr></thead>
+            <tbody id="dashboardBookList">
+              <!-- injected by JS -->
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px; color:#888; font-size:0.85rem;"><i class="fas fa-database"></i> Demo data · single-page app (no PHP)</p>
+      </div>
 
-Age and eligibility requirements
-In order to use the Book MS and access any content you need to be 13 years of age (or equivalent minimum age in your country) or older, have parental or guardian consent if you are a minor in your home country, have the power to enter into a binding contract with us and not be barred from doing so under any applicable laws, reside in a country where the service is available
+      <!-- ===== AVAILABLE ===== -->
+      <div id="panel-available" class="panel">
+        <h3 style="margin-bottom: 16px;"><i class="fas fa-check-circle" style="color:#e67e22;"></i> Available Books</h3>
+        <div class="table-wrap">
+          <table><thead><tr><th>ISBN</th><th>Title</th><th>Author</th></tr></thead>
+            <tbody id="availableList"></tbody>
+          </table>
+        </div>
+      </div>
 
-Book MS Provided By Us
-Book MS Options
-We provide numerous Book MS Options
+      <!-- ===== ADD ===== -->
+      <div id="panel-add" class="panel">
+        <div class="form-card">
+          <h3><i class="fas fa-plus-circle"></i> Add New Book</h3>
+          <form id="addForm">
+            <div class="form-row"><label>ISBN</label><input type="text" id="addIsbn" placeholder="978-3-16-148410-0" required></div>
+            <div class="form-row"><label>Title</label><input type="text" id="addTitle" placeholder="Book title"></div>
+            <div class="form-row"><label>Author</label><input type="text" id="addAuthor" placeholder="Author name"></div>
+            <div class="form-row"><label>Category</label><input type="text" id="addCategory" placeholder="Fiction, Science..."></div>
+            <div class="btn-group">
+              <button type="submit" class="btn"><i class="fas fa-save"></i> Add Book</button>
+              <button type="reset" class="btn btn-outline"><i class="fas fa-undo"></i> Reset</button>
+            </div>
+          </form>
+          <div id="addFeedback" style="margin-top:12px;"></div>
+        </div>
+      </div>
 
-Trials
-From time to time we or others on our behalf may offer trials of paid subscription for a specified period without payment or at a reduced rate Third Party Applications, Devices and Open Source Software
+      <!-- ===== BORROW ===== -->
+      <div id="panel-borrow" class="panel">
+        <div class="form-card">
+          <h3><i class="fas fa-hand-holding-heart"></i> Borrow Book</h3>
+          <form id="borrowForm">
+            <div class="form-row"><label>ISBN</label><input type="text" id="borrowIsbn" placeholder="ISBN" required></div>
+            <div class="form-row"><label>RegNo</label><input type="text" id="borrowReg" placeholder="SCT-211-0013/2020"></div>
+            <div class="form-row"><label>Student</label><input type="text" id="borrowStudent" placeholder="Full name"></div>
+            <div class="form-row"><label>Due date</label><input type="date" id="borrowDue"></div>
+            <div class="btn-group">
+              <button type="submit" class="btn"><i class="fas fa-hand-holding"></i> Borrow</button>
+              <button type="reset" class="btn btn-outline">Clear</button>
+            </div>
+          </form>
+          <div id="borrowFeedback" style="margin-top:12px;"></div>
+        </div>
+      </div>
 
-Third-Party Applications, Devices And Open Source Software
-The Book MS may be integrated with, or may otherwise interact with third party applications websites and services and third-party personal computers and mobile handsets tablets wearable devices speakers and other devices
+      <!-- ===== RETURN ===== -->
+      <div id="panel-return" class="panel">
+        <div class="form-card">
+          <h3><i class="fas fa-undo-alt"></i> Return Book</h3>
+          <form id="returnForm">
+            <div class="form-row"><label>ISBN</label><input type="text" id="returnIsbn" placeholder="ISBN" required></div>
+            <div class="form-row"><label>RegNo</label><input type="text" id="returnReg" placeholder="RegNo"></div>
+            <div class="form-row"><label>Condition</label>
+              <select id="returnCondition"><option value="Good">Good</option><option value="Damaged">Damaged</option><option value="Lost">Lost</option></select>
+            </div>
+            <div class="btn-group">
+              <button type="submit" class="btn"><i class="fas fa-check"></i> Return</button>
+              <button type="reset" class="btn btn-outline">Clear</button>
+            </div>
+          </form>
+          <div id="returnFeedback" style="margin-top:12px;"></div>
+        </div>
+      </div>
 
-Service Limitations and Modifications
-We use reasonable Care and skill to keep the Book MS operational
+      <!-- ===== OVERDUE ===== -->
+      <div id="panel-overdue" class="panel">
+        <h3 style="margin-bottom: 16px;"><i class="fas fa-clock" style="color:#c0392b;"></i> Overdue Books</h3>
+        <div class="table-wrap">
+          <table><thead><tr><th>ISBN</th><th>RegNo</th><th>Due Date</th></tr></thead>
+            <tbody id="overdueList"></tbody>
+          </table>
+        </div>
+      </div>
 
-Your Use of The Book MS
-Creating a Book MS account
-You may need to create a Book MS Account to use
+      <!-- ===== EDIT ===== -->
+      <div id="panel-edit" class="panel">
+        <div class="form-card">
+          <h3><i class="fas fa-edit"></i> Edit Book</h3>
+          <form id="editForm">
+            <div class="form-row"><label>ISBN</label><input type="text" id="editIsbn" placeholder="ISBN to edit" required></div>
+            <div class="form-row"><label>New Title</label><input type="text" id="editTitle" placeholder="New title"></div>
+            <div class="form-row"><label>New Author</label><input type="text" id="editAuthor" placeholder="New author"></div>
+            <div class="btn-group">
+              <button type="submit" class="btn"><i class="fas fa-pen"></i> Update</button>
+              <button type="reset" class="btn btn-outline">Reset</button>
+            </div>
+          </form>
+          <div id="editFeedback" style="margin-top:12px;"></div>
+        </div>
+      </div>
 
-Your rights to use the Book MS
-Access to Book MS
-Subject to your compliance with these Terms, we grant you limited, non-exclusive, revocable permission to make personal non-commercial use of the Book MS and the Content
+    </div><!-- /content -->
+  </div><!-- /main-grid -->
 
-Book MS's proprietary rights
-The Book MS and the content are the property of Book MS or Book MS's licensors
+  <footer class="footer">
+    <i class="fas fa-book"></i> Book MS 2026 · SPA version · <i class="fas fa-code"></i> Vanilla JS
+  </footer>
+</div><!-- /app -->
 
-Payments and cancellation
-You may purchase a Paid Subscription directly from Book MS or through a third party by Paying"
-          
+<script>
+  (function() {
+    // ----- DATA STORE -----
+    let books = [
+      { isbn: '978-3-16-148410-0', title: 'The Great Gatsby', author: 'F. Scott Fitzgerald', category: 'Fiction', borrowed: false, borrower: null, due: null },
+      { isbn: '978-0-14-143951-8', title: '1984', author: 'George Orwell', category: 'Dystopian', borrowed: true, borrower: 'SCT-001', due: '2026-08-10' },
+      { isbn: '978-0-06-112008-4', title: 'To Kill a Mockingbird', author: 'Harper Lee', category: 'Classic', borrowed: false, borrower: null, due: null },
+      { isbn: '978-0-452-28423-4', title: 'Fahrenheit 451', author: 'Ray Bradbury', category: 'Sci-Fi', borrowed: true, borrower: 'SCT-002', due: '2026-07-20' },
+      { isbn: '978-1-5011-2778-8', title: 'Educated', author: 'Tara Westover', category: 'Memoir', borrowed: false, borrower: null, due: null },
+    ];
+    let nextId = 100;
 
-console.log('client')
+    // DOM refs
+    const tabs = document.querySelectorAll('.nav-tab');
+    const panels = {
+      dashboard: document.getElementById('panel-dashboard'),
+      available: document.getElementById('panel-available'),
+      add: document.getElementById('panel-add'),
+      borrow: document.getElementById('panel-borrow'),
+      return: document.getElementById('panel-return'),
+      overdue: document.getElementById('panel-overdue'),
+      edit: document.getElementById('panel-edit'),
+    };
+    // feedback elements
+    const addFeedback = document.getElementById('addFeedback');
+    const borrowFeedback = document.getElementById('borrowFeedback');
+    const returnFeedback = document.getElementById('returnFeedback');
+    const editFeedback = document.getElementById('editFeedback');
 
+    // ----- helpers -----
+    function renderAll() {
+      renderDashboard();
+      renderAvailable();
+      renderOverdue();
+    }
+
+    function renderDashboard() {
+      const tbody = document.getElementById('dashboardBookList');
+      if (!tbody) return;
+      tbody.innerHTML = books.map(b => {
+        const status = b.borrowed ? `<span class="badge badge-danger">Borrowed</span>` : `<span class="badge">Available</span>`;
+        return `<tr><td>${b.isbn}</td><td>${b.title}</td><td>${b.author}</td><td>${status}</td></tr>`;
+      }).join('');
+    }
+
+    function renderAvailable() {
+      const tbody = document.getElementById('availableList');
+      if (!tbody) return;
+      const avail = books.filter(b => !b.borrowed);
+      tbody.innerHTML = avail.map(b => `<tr><td>${b.isbn}</td><td>${b.title}</td><td>${b.author}</td></tr>`).join('');
+    }
+
+    function renderOverdue() {
+      const tbody = document.getElementById('overdueList');
+      if (!tbody) return;
+      const today = new Date().toISOString().split('T')[0];
+      const overdue = books.filter(b => b.borrowed && b.due && b.due < today);
+      tbody.innerHTML = overdue.map(b => `<tr><td>${b.isbn}</td><td>${b.borrower || 'N/A'}</td><td>${b.due}</td></tr>`).join('');
+    }
+
+    // ----- navigation -----
+    tabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        tabs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        const target = this.dataset.tab;
+        Object.keys(panels).forEach(key => {
+          panels[key].classList.toggle('active', key === target);
+        });
+        // refresh data on switch
+        renderAll();
+      });
+    });
+
+    // ----- ADD BOOK -----
+    document.getElementById('addForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const isbn = document.getElementById('addIsbn').value.trim();
+      const title = document.getElementById('addTitle').value.trim() || 'Untitled';
+      const author = document.getElementById('addAuthor').value.trim() || 'Unknown';
+      const category = document.getElementById('addCategory').value.trim() || 'General';
+      if (!isbn) { addFeedback.innerHTML = '<span style="color:#c0392b;">ISBN is required.</span>'; return; }
+      if (books.some(b => b.isbn === isbn)) {
+        addFeedback.innerHTML = '<span style="color:#c0392b;">ISBN already exists.</span>';
+        return;
+      }
+      books.push({ isbn, title, author, category, borrowed: false, borrower: null, due: null });
+      addFeedback.innerHTML = `<span style="color:#27ae60;"><i class="fas fa-check"></i> "${title}" added.</span>`;
+      this.reset();
+      renderAll();
+    });
+
+    // ----- BORROW -----
+    document.getElementById('borrowForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const isbn = document.getElementById('borrowIsbn').value.trim();
+      const reg = document.getElementById('borrowReg').value.trim() || 'N/A';
+      const student = document.getElementById('borrowStudent').value.trim() || 'Anonymous';
+      const due = document.getElementById('borrowDue').value;
+      if (!isbn) { borrowFeedback.innerHTML = '<span style="color:#c0392b;">ISBN required.</span>'; return; }
+      const book = books.find(b => b.isbn === isbn);
+      if (!book) { borrowFeedback.innerHTML = '<span style="color:#c0392b;">Book not found.</span>'; return; }
+      if (book.borrowed) { borrowFeedback.innerHTML = '<span style="color:#c0392b;">Already borrowed.</span>'; return; }
+      if (!due) { borrowFeedback.innerHTML = '<span style="color:#c0392b;">Due date required.</span>'; return; }
+      book.borrowed = true;
+      book.borrower = reg;
+      book.due = due;
+      borrowFeedback.innerHTML = `<span style="color:#27ae60;"><i class="fas fa-check"></i> Borrowed by ${student} (${reg}) until ${due}.</span>`;
+      this.reset();
+      renderAll();
+    });
+
+    // ----- RETURN -----
+    document.getElementById('returnForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const isbn = document.getElementById('returnIsbn').value.trim();
+      const reg = document.getElementById('returnReg').value.trim();
+      const condition = document.getElementById('returnCondition').value;
+      if (!isbn) { returnFeedback.innerHTML = '<span style="color:#c0392b;">ISBN required.</span>'; return; }
+      const book = books.find(b => b.isbn === isbn);
+      if (!book) { returnFeedback.innerHTML = '<span style="color:#c0392b;">Book not found.</span>'; return; }
+      if (!book.borrowed) { returnFeedback.innerHTML = '<span style="color:#c0392b;">This book is not borrowed.</span>'; return; }
+      if (reg && book.borrower !== reg) { returnFeedback.innerHTML = `<span style="color:#c0392b;">RegNo mismatch (expected ${book.borrower}).</span>`; return; }
+      book.borrowed = false;
+      book.borrower = null;
+      book.due = null;
+      returnFeedback.innerHTML = `<span style="color:#27ae60;"><i class="fas fa-check"></i> Returned (${condition}).</span>`;
+      this.reset();
+      renderAll();
+    });
+
+    // ----- EDIT -----
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const isbn = document.getElementById('editIsbn').value.trim();
+      const newTitle = document.getElementById('editTitle').value.trim();
+      const newAuthor = document.getElementById('editAuthor').value.trim();
+      if (!isbn) { editFeedback.innerHTML = '<span style="color:#c0392b;">ISBN required.</span>'; return; }
+      const book = books.find(b => b.isbn === isbn);
+      if (!book) { editFeedback.innerHTML = '<span style="color:#c0392b;">Book not found.</span>'; return; }
+      if (newTitle) book.title = newTitle;
+      if (newAuthor) book.author = newAuthor;
+      editFeedback.innerHTML = `<span style="color:#27ae60;"><i class="fas fa-check"></i> Updated.</span>`;
+      this.reset();
+      renderAll();
+    });
+
+    // ----- initial render -----
+    renderAll();
+
+    // Also re-render when switching to any panel (already in tab click)
+    // extra: keep dashboard stats updated (static for demo)
+  })();
 </script>
-  </html>
 
+</body>
+</html>
